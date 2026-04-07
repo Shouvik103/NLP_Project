@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Syntactic Simplification - Light Mode</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#fb923c", // Orange-400
+                        "primary-hover": "#f97316", // Orange-500
+                        "background-light": "#fff7ed", // Orange-50/Warm white
+                        "background-dark": "#1c1917", // Stone-900
+                        "surface-light": "#ffffff",
+                        "surface-dark": "#292524", // Stone-800
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "2xl": "1rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        textarea::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        textarea::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        textarea::-webkit-scrollbar-thumb {
+            background-color: #fdba74;
+            border-radius: 4px;
+        }
+
+        textarea:focus::-webkit-scrollbar-thumb {
+            background-color: #fb923c;
+        }
+    </style>
+</head>
+
+<body
+    class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-stone-50 min-h-screen flex flex-col font-display antialiased selection:bg-primary/20 selection:text-primary">
+    <header
+        class="bg-surface-light dark:bg-surface-dark border-b border-orange-100 dark:border-stone-800 sticky top-0 z-50">
+        <div class="px-4 md:px-10 py-3 max-w-7xl mx-auto flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div
+                    class="size-9 rounded-xl bg-primary/10 flex items-center justify-center text-primary shadow-sm border border-primary/10">
+                    <span class="material-symbols-outlined text-2xl">menu_book</span>
+                </div>
+                <h2 class="text-slate-900 dark:text-white text-lg font-bold leading-tight tracking-tight">SimplifyTool
+                </h2>
+            </div>
+            <div class="flex items-center gap-2">
+                <button aria-label="Switch to dark mode"
+                    class="flex items-center justify-center size-10 rounded-lg text-slate-500 hover:bg-orange-50 dark:hover:bg-stone-800 hover:text-primary transition-all active:scale-95 focus:outline-none focus:ring-2 focus:ring-primary/20">
+                    <span class="material-symbols-outlined text-[24px]">dark_mode</span>
+                </button>
+            </div>
+        </div>
+    </header>
+    <main class="flex-1 w-full max-w-[960px] mx-auto px-4 sm:px-6 py-10 md:py-14 flex flex-col gap-8">
+        <div class="text-center space-y-3 mb-4">
+            <h1 class="text-slate-900 dark:text-white text-3xl md:text-5xl font-extrabold tracking-tight">
+                Syntactic Simplification of <span class="text-primary">Long Sentences</span>
+            </h1>
+            <p class="text-slate-500 dark:text-stone-400 text-lg md:text-xl max-w-2xl mx-auto">
+                Break down complex sentences into clear, concise language instantly.
+            </p>
+        </div>
+        <div class="flex flex-col gap-3">
+            <div class="flex items-center justify-between px-1">
+                <label
+                    class="text-slate-700 dark:text-stone-300 text-xs font-bold uppercase tracking-wider flex items-center gap-2">
+                    <span class="material-symbols-outlined text-lg text-primary">edit_note</span>
+                    Original Text
+                </label>
+                <button
+                    class="text-xs font-medium text-slate-400 hover:text-red-500 flex items-center gap-1 transition-colors">
+                    <span class="material-symbols-outlined text-[16px]">delete</span>
+                    Clear
+                </button>
+            </div>
+            <div class="relative group">
+                <textarea
+                    class="form-textarea w-full resize-y min-h-[220px] rounded-2xl border border-orange-200 dark:border-stone-700 bg-surface-light dark:bg-surface-dark text-slate-800 dark:text-stone-200 p-6 text-lg font-normal leading-relaxed placeholder:text-slate-400 focus:border-primary focus:ring-2 focus:ring-primary/10 shadow-sm group-hover:border-orange-300 dark:group-hover:border-stone-600"
+                    placeholder="Paste your long, complex sentence here..."></textarea>
+                <div class="absolute bottom-4 right-4 flex gap-2">
+                    <button
+                        class="p-2 rounded-lg bg-orange-50 hover:bg-orange-100 dark:bg-stone-800 dark:hover:bg-stone-700 text-slate-400 hover:text-primary border border-orange-100 dark:border-stone-700"
+                        title="Paste from clipboard">
+                        <span class="material-symbols-outlined text-[20px]">content_paste</span>
+                    </button>
+                </div>
+            </div>
+            <div id="char-word-count" class="flex justify-between text-xs font-medium text-slate-400 px-2">
+                <span>0 characters</span>
+                <span>0 words</span>
+            </div>
+        </div>
+        <div class="flex justify-center py-2">
+            <button
+                class="relative flex items-center justify-center gap-3 w-full sm:w-auto min-w-[220px] cursor-pointer rounded-xl h-14 px-8 bg-primary hover:bg-primary-hover active:scale-95 transition-all text-white text-lg font-bold shadow-lg shadow-orange-500/25 ring-offset-2 focus:ring-2 focus:ring-primary group">
+                <span
+                    class="material-symbols-outlined text-2xl group-hover:rotate-12 transition-transform">auto_awesome</span>
+                <span>Simplify Text</span>
+            </button>
+        </div>
+        <div class="flex flex-col gap-3">
+            <label
+                class="text-slate-700 dark:text-stone-300 text-xs font-bold uppercase tracking-wider flex items-center gap-2 px-1">
+                <span class="material-symbols-outlined text-lg text-primary">check_circle</span>
+                Simplified Result
+            </label>
+            <div
+                class="relative w-full rounded-2xl bg-surface-light dark:bg-surface-dark border border-orange-200 dark:border-stone-700 shadow-sm overflow-hidden min-h-[180px] flex flex-col">
+                <div
+                    class="flex items-center justify-between px-4 py-3 bg-orange-50/80 dark:bg-stone-800/50 border-b border-orange-100 dark:border-stone-700/50 backdrop-blur-sm">
+                    <span class="text-xs font-semibold text-slate-500 uppercase tracking-wide">Simplified Output</span>
+                    <div class="flex gap-1">
+                        <button
+                            class="p-1.5 rounded-md text-slate-500 hover:text-primary hover:bg-white dark:hover:bg-stone-700 transition-colors flex items-center gap-1.5 text-xs font-medium border border-transparent hover:border-orange-200 dark:hover:border-stone-600">
+                            <span class="material-symbols-outlined text-[18px]">content_copy</span>
+                            Copy
+                        </button>
+                        <button
+                            class="p-1.5 rounded-md text-slate-500 hover:text-primary hover:bg-white dark:hover:bg-stone-700 transition-colors border border-transparent hover:border-orange-200 dark:hover:border-stone-600"
+                            title="Regenerate">
+                            <span class="material-symbols-outlined text-[18px]">refresh</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="p-6 text-slate-800 dark:text-stone-200 text-lg leading-relaxed">
+                    <p class="opacity-60 italic text-slate-500">The simplified sentences will appear here...</p>
+                </div>
+                <div class="absolute left-0 top-0 bottom-0 w-1 bg-primary"></div>
+            </div>
+        </div>
+    </main>
+    <footer class="py-8 mt-auto border-t border-orange-100 dark:border-stone-800 bg-surface-light dark:bg-surface-dark">
+        <div class="max-w-7xl mx-auto px-4 flex justify-center items-center text-sm text-slate-500 font-medium">
+            <p>© 2024 SimplifyTool. All rights reserved.</p>
+        </div>
+    </footer>
+    <script>
+        const simplifyBtn = document.querySelector('button.bg-primary');
+        const textArea = document.querySelector('textarea');
+        const resultContainer = document.querySelector('.bg-orange-50\\/80').parentNode; // The simplified result container
+        const resultContent = resultContainer.querySelector('.p-6');
+        const clearBtn = document.querySelector('button.text-slate-400.hover\\:text-red-500');
+        const themeBtn = document.querySelector('button[aria-label="Switch to dark mode"]');
+        const themeIcon = themeBtn.querySelector('span');
+        const html = document.documentElement;
+
+        // Theme management
+        function setTheme(isDark) {
+            if (isDark) {
+                html.classList.add('dark');
+                themeIcon.textContent = 'light_mode';
+                themeBtn.setAttribute('aria-label', 'Switch to light mode');
+                localStorage.setItem('theme', 'dark');
+            } else {
+                html.classList.remove('dark');
+                themeIcon.textContent = 'dark_mode';
+                themeBtn.setAttribute('aria-label', 'Switch to dark mode');
+                localStorage.setItem('theme', 'light');
+            }
+        }
+
+        // Initialize theme
+        const savedTheme = localStorage.getItem('theme');
+        const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+        if (savedTheme === 'dark' || (!savedTheme && systemDark)) {
+            setTheme(true);
+        } else {
+            setTheme(false);
+        }
+
+        // Theme toggle listener
+        themeBtn.addEventListener('click', () => {
+            const isDark = html.classList.contains('dark');
+            setTheme(!isDark);
+        });
+
+        // Clear functionality
+        clearBtn.addEventListener('click', () => {
+            textArea.value = '';
+            document.querySelector('#char-word-count span:first-child').textContent = '0 characters';
+            document.querySelector('#char-word-count span:last-child').textContent = '0 words';
+        });
+
+        // Character/Word count update
+        textArea.addEventListener('input', () => {
+            const text = textArea.value;
+            const charCount = text.length;
+            const wordCount = text.trim() ? text.trim().split(/\s+/).length : 0;
+
+            document.querySelector('#char-word-count span:first-child').textContent = `${charCount} characters`;
+            document.querySelector('#char-word-count span:last-child').textContent = `${wordCount} words`;
+        });
+
+        // Simplify functionality
+        simplifyBtn.addEventListener('click', async () => {
+            const text = textArea.value.trim();
+            if (!text) return;
+
+            // Loading state
+            const originalBtnContent = simplifyBtn.innerHTML;
+            simplifyBtn.innerHTML = '<span class="material-symbols-outlined animate-spin">progress_activity</span><span>Processing...</span>';
+            simplifyBtn.disabled = true;
+            resultContent.innerHTML = '<p class="opacity-60 italic text-slate-500">Simplifying...</p>';
+
+            try {
+                const response = await fetch('/simplify', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ text: text }),
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    if (data.simplified && data.simplified.length > 0) {
+                        const html = data.simplified.map(item => {
+                            // Check if item is object (new format) or string (fallback/old format)
+                            let text = "";
+                            let mods = [];
+
+                            if (typeof item === 'object' && item !== null && item.text) {
+                                text = item.text;
+                                mods = item.modifications || [];
+                            } else {
+                                text = item;
+                            }
+
+                            // Generate Badges
+                            const badgesHtml = mods.map(mod =>
+                                `<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-orange-100 text-orange-800 dark:bg-orange-900/30 dark:text-orange-200 border border-orange-200 dark:border-orange-800/50">
+                                   ${mod}
+                                </span>`
+                            ).join('');
+
+                            return `<div class="mb-3 p-4 bg-white dark:bg-stone-800 rounded-xl border border-orange-100 dark:border-stone-700 shadow-sm transition-all hover:shadow-md hover:border-orange-200 dark:hover:border-stone-600 group">
+                                <p class="text-slate-800 dark:text-stone-200 text-lg leading-relaxed mb-${badgesHtml ? '3' : '0'} group-hover:text-slate-900 dark:group-hover:text-white transition-colors">${text}</p>
+                                ${badgesHtml ? `<div class="flex flex-wrap gap-2">${badgesHtml}</div>` : ''}
+                            </div>`;
+                        }).join('');
+                        resultContent.innerHTML = html;
+                    } else {
+                        resultContent.innerHTML = '<p class="text-orange-500">No simplification could be made or empty result.</p>';
+                    }
+                } else {
+                    resultContent.innerHTML = `<p class="text-red-500">Error: ${data.error || 'Something went wrong'}</p>`;
+                }
+            } catch (error) {
+                resultContent.innerHTML = `<p class="text-red-500">Error: ${error.message}</p>`;
+            } finally {
+                simplifyBtn.innerHTML = originalBtnContent;
+                simplifyBtn.disabled = false;
+            }
+        });
+
+        // Copy functionality
+        const copyBtn = document.querySelector('.p-1\\.5.rounded-md.text-slate-500.hover\\:text-primary.hover\\:bg-white.dark\\:hover\\:bg-stone-700.transition-colors.flex.items-center.gap-1\\.5.text-xs.font-medium');
+
+        copyBtn.addEventListener('click', async () => {
+            const resultTextDiv = resultContainer.querySelector('.p-6');
+
+            // Get text from the result div. 
+            // If it contains child divs (simplified sentences), join them.
+            // Otherwise get textContent directly.
+            let textToCopy = '';
+            if (resultTextDiv.children.length > 0) {
+                // It has simplified sentences in divs
+                const sentences = Array.from(resultTextDiv.children).map(div => {
+                    // Try to find the p tag which contains the text
+                    const p = div.querySelector('p');
+                    if (p) return p.textContent.trim();
+                    return div.textContent.trim(); // Fallback
+                });
+                textToCopy = sentences.join('\n');
+            } else {
+                // Fallback or plain text
+                textToCopy = resultTextDiv.textContent.trim();
+                // Don't copy the placeholder text if that's all there is
+                if (textToCopy === 'The simplified sentences will appear here...' || textToCopy === 'Simplifying...') {
+                    return;
+                }
+            }
+
+            if (!textToCopy) return;
+
+            try {
+                await navigator.clipboard.writeText(textToCopy);
+
+                // Visual feedback
+                const originalHtml = copyBtn.innerHTML;
+                copyBtn.innerHTML = '<span class="material-symbols-outlined text-[18px]">check</span>Copied!';
+                copyBtn.classList.add('text-green-600', 'dark:text-green-400');
+
+                setTimeout(() => {
+                    copyBtn.innerHTML = originalHtml;
+                    copyBtn.classList.remove('text-green-600', 'dark:text-green-400');
+                }, 2000);
+            } catch (err) {
+                console.error('Failed to copy: ', err);
+                // Optional: Error feedback
+                const originalHtml = copyBtn.innerHTML;
+                copyBtn.innerHTML = '<span class="material-symbols-outlined text-[18px]">error</span>Error';
+                copyBtn.classList.add('text-red-500');
+                setTimeout(() => {
+                    copyBtn.innerHTML = originalHtml;
+                    copyBtn.classList.remove('text-red-500');
+                }, 2000);
+            }
+        });
+    </script>
+</body>
+
+</html>

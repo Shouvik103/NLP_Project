@@ -1,0 +1,31 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# Virtual environment
+venv/
+
+# macOS
+.DS_Store
+
+# Environment files
+.env
+.env.*
+
+# Notebook checkpoints
+.ipynb_checkpoints/
+
+# Build artifacts
+build/
+dist/
+*.egg-info/
+
+# Logs
+*.log
+
+# Large project assets (keep local)
+Dataset/
+models/
+test50_model_comparison*.csv

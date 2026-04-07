@@ -1,0 +1,6 @@
+spacy
+flask
+lemminflect
+torch
+transformers
+peft
