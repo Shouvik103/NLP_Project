@@ -36,6 +36,32 @@ If you use neural models, ensure these are installed:
 - `transformers`
 - `peft` (required for LoRA adapter models)
 
+## Dataset and Models Setup
+
+Large assets are not committed to GitHub (`Dataset/` and `models/` are gitignored), so after cloning you must place them manually in the project root.
+
+Required local folders:
+
+```text
+project/
+  Dataset/
+  models/
+```
+
+Expected model subfolders under `models/`:
+
+- `t5_small`
+- `bart_base`
+- `t5_base_lora`
+- `bart_large_lora`
+
+If these folders are missing:
+
+- Rule-based simplification still runs.
+- Neural fallback/model-based simplification will be skipped or raise loading warnings.
+
+Tip: keep the exact folder names above so `app.py` can discover local models.
+
 ## Run the Project
 
 From project root:
