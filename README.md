@@ -23,19 +23,41 @@ This project simplifies complex English sentences using a hybrid pipeline:
 - `Dataset/`: Dataset files for evaluation/training experiments
 - `index.html`: Frontend
 
-## Requirements
+## Requirements & Environment Setup
 
-Install Python dependencies (preferably in a virtual environment):
+It is highly recommended to use a Python virtual environment to manage dependencies for this project.
+
+### 1. Create and Activate a Virtual Environment
+
+**On macOS and Linux:**
+```bash
+python3 -m venv venv
+source venv/bin/activate
+```
+
+**On Windows:**
+```bash
+python -m venv venv
+venv\Scripts\activate
+```
+
+### 2. Install Dependencies
+
+Once the virtual environment is activated, install all the required packages from `requirements.txt`:
 
 ```bash
 pip install -r requirements.txt
 ```
 
-If you use neural models, ensure these are installed:
+This will install packages like `spacy`, `flask`, `torch`, `transformers`, and `peft`.
 
-- `torch`
-- `transformers`
-- `peft` (required for LoRA adapter models)
+### 3. Download the spaCy Model
+
+The rule-based simplification pipeline relies on spaCy's English dependency parser. Download it by running:
+
+```bash
+python -m spacy download en_core_web_sm
+```
 
 ## Dataset and Models Setup
 
