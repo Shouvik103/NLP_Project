@@ -7,6 +7,7 @@ from modules.lexical import simplify_lexical
 from modules.active_voice import convert_to_active
 from modules.compression import simplify_compression
 from modules.coreference import resolve_coreference
+from modules.graph_based import graph_based_simplify
 
 def track_change(original, new_text, tag):
     """Helper to detect change and return tag if changed."""
@@ -14,7 +15,7 @@ def track_change(original, new_text, tag):
         return tag
     return None
 
-def overall_simplify(text):
+def overall_simplify(text, use_graph_based=True, graph_debug=False):
     """
     Apply pipeline of simplifications.
     Returns list of dicts: {'text': str, 'modifications': list}
@@ -29,6 +30,48 @@ def overall_simplify(text):
         initial_mods.append("Compression (Removed fillers/parentheticals)")
         
     current_items = [{'text': compressed_text, 'mods': initial_mods}]
+
+    # Step 0b: Graph-based splitting (optional)
+    if use_graph_based:
+        graph_items = []
+        for item in current_items:
+            try:
+                g_results = graph_based_simplify(item['text'], debug=graph_debug)
+            except Exception:
+                graph_items.append(item)
+                continue
+
+            if not g_results:
+                graph_items.append(item)
+                continue
+
+            # Treat no-change output as pass-through.
+            if (
+                len(g_results) == 1
+                and g_results[0].get('text', '').strip() == item['text'].strip()
+                and any('No Change' in m for m in g_results[0].get('modifications', []))
+            ):
+                graph_items.append(item)
+                continue
+
+            added_any = False
+            for g in g_results:
+                g_text = g.get('text', '').strip()
+                if not g_text:
+                    continue
+
+                new_mods = item['mods'].copy()
+                for m in g.get('modifications', []):
+                    if m and 'No Change' not in m and m not in new_mods:
+                        new_mods.append(m)
+
+                graph_items.append({'text': g_text, 'mods': new_mods})
+                added_any = True
+
+            if not added_any:
+                graph_items.append(item)
+
+        current_items = graph_items
 
     # Step 1: Conjunctions (Recursive)
     # logic: iterate, if split happens, inherit mods and add 'Split'

@@ -1,0 +1,35 @@
+{
+  "rule_based": {
+    "system": "Rule-Based",
+    "sari": 20.22,
+    "bleu": 27.02,
+    "fkgl_predicted": 8.76,
+    "fkgl_complex": 12.74,
+    "fkgl_reference": 9.5,
+    "fkgl_reduction": 3.98
+  },
+  "t5_small": {
+    "system": "T5-small",
+    "sari": 0.0,
+    "bleu": 0.0,
+    "fkgl_predicted": 0.0
+  },
+  "bart_base": {
+    "system": "BART-base",
+    "sari": 0.0,
+    "bleu": 0.0,
+    "fkgl_predicted": 0.0
+  },
+  "t5_base_lora": {
+    "system": "T5-base (LoRA)",
+    "sari": 0.0,
+    "bleu": 0.0,
+    "fkgl_predicted": 0.0
+  },
+  "bart_large_lora": {
+    "system": "BART-lg (LoRA)",
+    "sari": 0.0,
+    "bleu": 0.0,
+    "fkgl_predicted": 0.0
+  }
+}

@@ -1,0 +1,19 @@
+\begin{table}[h]
+\centering
+\caption{Evaluation results on Newsela test set. Best score per metric in \textbf{bold}.}
+\label{tab:results}
+\begin{tabular}{lccccc}
+\toprule
+\textbf{System} & \textbf{SARI}↑ & \textbf{BLEU}↑ & \textbf{FKGL}↓ & \textbf{FKGL Δ}↑ & \textbf{Cov.\%} \\
+\midrule
+Rule-Based & 22.66 & 25.96 & 13.34 & 3.2 & 59.2\% \\
+T5-small & 38.63 & 31.33 & \textbf{11.71} & \textbf{4.83} & 96.7\% \\
+BART-base & \textbf{39.87} & \textbf{33.15} & 11.83 & 4.7 & 94.6\% \\
+T5-base (LoRA) & 37.45 & 30.43 & 12.11 & 4.42 & 89.1\% \\
+BART-lg (LoRA) & 33.47 & 30.27 & 13.44 & 3.09 & 71.4\% \\
+\midrule
+Source & — & — & 16.53 & 0.00 & — \\
+Reference & — & — & 11.07 & 5.46 & — \\
+\bottomrule
+\end{tabular}
+\end{table}

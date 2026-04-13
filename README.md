@@ -19,6 +19,7 @@ This project simplifies complex English sentences using a hybrid pipeline:
 - `simplification.py`: Main rule-based pipeline
 - `modules/`: Rule modules
 - `models/`: Local model folders
+- `notebooks/`: Jupyter notebooks for model training & evaluation
 - `Dataset/`: Dataset files for evaluation/training experiments
 - `index.html`: Frontend
 
@@ -38,29 +39,35 @@ If you use neural models, ensure these are installed:
 
 ## Dataset and Models Setup
 
-Large assets are not committed to GitHub (`Dataset/` and `models/` are gitignored), so after cloning you must place them manually in the project root.
+> **Note:** The trained model weights are too large to host on GitHub. Instead, the Jupyter notebooks used to train and evaluate every model are included in this repository so you can reproduce them yourself.
 
-Required local folders:
+### Reproducing the Models
+
+The following notebooks (run on Google Colab with GPU) contain all training and evaluation code:
+
+| Notebook | Description |
+|----------|-------------|
+| `notebooks/NLP_Project.ipynb` | End-to-end project notebook — data prep, rule-based pipeline testing, and initial model experiments |
+| `notebooks/Stage_2_seq2seq (1).ipynb` | Training and evaluation of the **T5-Small** and **BART-Base** seq2seq baselines |
+| `notebooks/llm_finetuning_lora (2).ipynb` | LoRA fine-tuning of **T5-Base** and **BART-Large** using the PEFT library |
+| `notebooks/stage3_analysis (2).ipynb` | Comparative analysis and metric computation across all four models |
+
+After training, download the model checkpoints and place them under `models/` with the following folder names:
 
 ```text
-project/
-  Dataset/
-  models/
+models/
+  t5_small/
+  bart_base/
+  t5_base_lora/
+  bart_large_lora/
 ```
 
-Expected model subfolders under `models/`:
+### What if the models are missing?
 
-- `t5_small`
-- `bart_base`
-- `t5_base_lora`
-- `bart_large_lora`
+- **Rule-based simplification still works** — no model files are needed.
+- **Neural fallback / model-based simplification** will be skipped or show loading warnings.
 
-If these folders are missing:
-
-- Rule-based simplification still runs.
-- Neural fallback/model-based simplification will be skipped or raise loading warnings.
-
-Tip: keep the exact folder names above so `app.py` can discover local models.
+> **Tip:** Keep the exact folder names listed above so `app.py` can auto-discover local models.
 
 ## Run the Project
 

@@ -1,0 +1,42 @@
+{
+  "Rule-Based": {
+    "sari": 22.66,
+    "bleu": 25.96,
+    "fkgl": 13.34,
+    "fkgl_red": 3.2,
+    "avg_len": 28.3,
+    "coverage": 59.2
+  },
+  "T5-small": {
+    "sari": 38.63,
+    "bleu": 31.33,
+    "fkgl": 11.71,
+    "fkgl_red": 4.83,
+    "avg_len": 15.7,
+    "coverage": 96.7
+  },
+  "BART-base": {
+    "sari": 39.87,
+    "bleu": 33.15,
+    "fkgl": 11.83,
+    "fkgl_red": 4.7,
+    "avg_len": 16.4,
+    "coverage": 94.6
+  },
+  "T5-base (LoRA)": {
+    "sari": 37.45,
+    "bleu": 30.43,
+    "fkgl": 12.11,
+    "fkgl_red": 4.42,
+    "avg_len": 16.8,
+    "coverage": 89.1
+  },
+  "BART-lg (LoRA)": {
+    "sari": 33.47,
+    "bleu": 30.27,
+    "fkgl": 13.44,
+    "fkgl_red": 3.09,
+    "avg_len": 20.6,
+    "coverage": 71.4
+  }
+}
